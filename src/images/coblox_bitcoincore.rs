@@ -180,7 +180,8 @@ impl IntoIterator for BitcoinCoreImageArgs {
             args.push(format!("-fallbackfee={}", fallback_fee));
         }
 
-        args.push("-debug".into()); // Needed for message "Flushed wallet.dat"
+        // Will print a message when bitcoind is fully started
+        args.push("-startupnotify='echo \'bitcoind startup sequence completed.\''".into());
 
         args.push(format!("-addresstype={}", self.address_type));
 
@@ -202,7 +203,7 @@ impl Image for BitcoinCore {
         container
             .logs()
             .stdout
-            .wait_for_message("Flushed wallet.dat")
+            .wait_for_message("bitcoind startup sequence completed.")
             .unwrap();
 
         let additional_sleep_period =
@@ -241,7 +242,7 @@ impl Image for BitcoinCore {
 impl Default for BitcoinCore {
     fn default() -> Self {
         BitcoinCore {
-            tag: "0.20.0".into(),
+            tag: "0.21.0".into(),
             arguments: BitcoinCoreImageArgs::default(),
         }
     }
