@@ -54,6 +54,7 @@ impl LogStream {
         let mut lines = vec![];
 
         for line in logs.lines() {
+            log::debug!("{:?}", line);
             if handle_line(line?, message, &mut lines) {
                 return Ok(());
             }

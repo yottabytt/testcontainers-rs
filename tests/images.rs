@@ -15,6 +15,15 @@ use zookeeper::{Acl, CreateMode, ZooKeeper};
 use testcontainers::{core::WaitFor, *};
 
 #[test]
+fn redpanda_container() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let run_args = RunArgs::default().with_mapped_port((9092, 9092)); // this is -p, if not uses -P and assigns 9092 to a random conflict-free port on host
+    let node = docker.run_with_args(images::redpanda::Redpanda::default(), run_args);
+    assert_eq!(node.get_host_port(9092), 9092);
+}
+
+#[test]
 fn coblox_bitcoincore_getnewaddress() {
     let _ = pretty_env_logger::try_init();
     let docker = clients::Cli::default();

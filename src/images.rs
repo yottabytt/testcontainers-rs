@@ -9,5 +9,6 @@ pub mod orientdb;
 pub mod parity_parity;
 pub mod postgres;
 pub mod redis;
+pub mod redpanda;
 pub mod trufflesuite_ganachecli;
 pub mod zookeeper;
