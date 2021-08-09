@@ -1,3 +1,4 @@
+pub mod bigtable;
 pub mod coblox_bitcoincore;
 pub mod dynamodb_local;
 pub mod elasticmq;

@@ -43,6 +43,7 @@ impl Cli {
         }
 
         let command = Client::build_run_command(&image, &mut docker, &run_args);
+        log::debug!("{:?}", command);
 
         log::debug!("Executing command: {:?}", command);
 

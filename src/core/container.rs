@@ -88,7 +88,7 @@ where
 
     fn block_until_ready(&self) {
         log::debug!("Waiting for container {} to be ready", self.id);
-
+        log::debug!("{:?}", self.image.ready_conditions());
         for condition in self.image.ready_conditions() {
             match condition {
                 WaitFor::StdOutMessage { message } => self

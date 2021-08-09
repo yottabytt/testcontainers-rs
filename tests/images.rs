@@ -15,6 +15,15 @@ use zookeeper::{Acl, CreateMode, ZooKeeper};
 use testcontainers::{core::WaitFor, *};
 
 #[test]
+fn bigtable_container() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let run_args = RunArgs::default().with_mapped_port((8086, 8086));
+    let node = docker.run_with_args(images::bigtable::Bigtable::default(), run_args);
+    assert_eq!(node.get_host_port(8086), 8086);
+}
+
+#[test]
 fn coblox_bitcoincore_getnewaddress() {
     let _ = pretty_env_logger::try_init();
     let docker = clients::Cli::default();
