@@ -1,18 +1,26 @@
 use crate::{core::WaitFor, Image};
 use std::collections::HashMap;
 
-const CONTAINER_IDENTIFIER: &str = "mechiru/bigtable-emulator";
-const DEFAULT_TAG: &str = "273.0.0-alpine";
+const CONTAINER_IDENTIFIER: &str = "storytel/gcp-bigtable-emulator";
+const DEFAULT_TAG: &str = "352.0.0";
 
-#[derive(Debug, Default, Clone)]
-pub struct BigtableArgs;
+#[derive(Debug, Clone)]
+pub struct BigtableArgs {
+    pub host: String,
+    pub port: String,
+}
 
 impl IntoIterator for BigtableArgs {
     type Item = String;
     type IntoIter = ::std::vec::IntoIter<String>;
 
     fn into_iter(self) -> <Self as IntoIterator>::IntoIter {
-        vec![].into_iter()
+        let mut args = Vec::new();
+        args.push("--host".to_owned());
+        args.push(self.host);
+        args.push("--port".to_owned());
+        args.push(self.port);
+        args.into_iter()
     }
 }
 
@@ -26,7 +34,16 @@ impl Default for Bigtable {
     fn default() -> Self {
         Bigtable {
             tag: DEFAULT_TAG.to_string(),
-            arguments: BigtableArgs {},
+            arguments: BigtableArgs::default(),
+        }
+    }
+}
+
+impl Default for BigtableArgs {
+    fn default() -> Self {
+        BigtableArgs {
+            host: "0.0.0.0".to_owned(),
+            port: "8086".to_owned(),
         }
     }
 }
@@ -42,8 +59,8 @@ impl Image for Bigtable {
     }
 
     fn ready_conditions(&self) -> Vec<WaitFor> {
-        vec![WaitFor::message_on_stderr(
-            "[bigtable] Cloud Bigtable emulator running on [::]:8086"
+        vec![WaitFor::message_on_stdout(
+            "Cloud Bigtable emulator running on [::]:8086"
         )]
     }
 
