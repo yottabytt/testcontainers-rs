@@ -15,6 +15,38 @@ use zookeeper::{Acl, CreateMode, ZooKeeper};
 use testcontainers::{core::WaitFor, *};
 
 #[test]
+fn bigtable_emulator() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let _node = docker.run(images::gcloud_emulators::bigtable::Bigtable::default());
+    // TODO: meaninful test
+}
+
+#[test]
+fn datastore_emulator() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let _node = docker.run(images::gcloud_emulators::datastore::Datastore::default());
+     // TODO: meaninful test
+}
+
+#[test]
+fn firestore_emulator() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let _node = docker.run(images::gcloud_emulators::firestore::Firestore::default());
+     // TODO: meaninful test
+}
+
+#[test]
+fn pubsub_emulator() {
+    let _ = pretty_env_logger::try_init();
+    let docker = clients::Cli::default();
+    let _node = docker.run(images::gcloud_emulators::pubsub::PubSub::default());
+     // TODO: meaninful test
+}
+
+#[test]
 fn coblox_bitcoincore_getnewaddress() {
     let _ = pretty_env_logger::try_init();
     let docker = clients::Cli::default();

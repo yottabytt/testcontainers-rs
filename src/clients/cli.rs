@@ -132,7 +132,7 @@ impl Client {
         run_args: &RunArgs,
     ) -> &'a mut Command {
         command.arg("run");
-
+        
         if let Some(network) = run_args.network() {
             command.arg(format!("--network={}", network));
         }
@@ -160,7 +160,10 @@ impl Client {
                     .arg(format!("{}:{}", port.local, port.internal));
             }
         } else {
-            command.arg("-P"); // expose all ports
+            if let Some(port) = image.expose_port() {
+                command.arg(format!("--expose={}", port));
+            }    
+            command.arg("-P"); // publish all exposed ports
         }
 
         command
@@ -332,7 +335,7 @@ impl Docker for Cli {
     }
 
     fn stop(&self, id: &str) {
-        let _ = self
+        self
             .inner
             .command()
             .arg("stop")
@@ -345,7 +348,8 @@ impl Docker for Cli {
     }
 
     fn start(&self, id: &str) {
-        self.inner
+        self
+            .inner
             .command()
             .arg("start")
             .arg(id)

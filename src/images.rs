@@ -1,3 +1,4 @@
+pub mod gcloud_emulators;
 pub mod coblox_bitcoincore;
 pub mod dynamodb_local;
 pub mod elasticmq;

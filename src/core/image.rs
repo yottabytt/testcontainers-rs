@@ -96,6 +96,10 @@ where
     fn entrypoint(&self) -> Option<String> {
         None
     }
+
+    fn expose_port(&self) -> Option<u16> {
+        None
+    }
 }
 
 /// Represents a port mapping between a local port and the internal port of a container.
