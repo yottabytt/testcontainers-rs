@@ -11,6 +11,7 @@ use std::{
     thread::sleep,
     time::{Duration, Instant},
 };
+use users::{get_current_uid, get_user_by_uid};
 
 const ONE_SECOND: Duration = Duration::from_secs(1);
 const ZERO: Duration = Duration::from_secs(0);
@@ -49,7 +50,15 @@ impl Cli {
             let serr = String::from_utf8_lossy(&output.stderr);
             let sout = String::from_utf8_lossy(&output.stdout);
             log::error!("{}", serr);
-            panic!("Failed to start container. {} {}", serr, sout);
+
+            let user = get_user_by_uid(get_current_uid()).unwrap();
+
+            panic!(
+                "Failed to start container for user: {:?}. {} {}",
+                user.name(),
+                serr,
+                sout
+            );
         }
 
         let container_id = String::from_utf8(output.stdout)
