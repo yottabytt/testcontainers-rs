@@ -3,6 +3,7 @@ use crate::{
     Container, Image, ImageArgs, RunnableImage,
 };
 use shiplift::rep::ContainerDetails;
+use std::path::Path;
 use std::{
     collections::HashMap,
     ffi::{OsStr, OsString},
@@ -54,8 +55,9 @@ impl Cli {
             let user = get_user_by_uid(get_current_uid()).unwrap();
 
             panic!(
-                "Failed to start container for user: {:?}. {} {}",
+                "Failed to start container for user: {:?}. docker config json exists: {}.{} {}",
                 user.name(),
+                Path::new("/home/dparthiban/.docker/config.json").exists(),
                 serr,
                 sout
             );
