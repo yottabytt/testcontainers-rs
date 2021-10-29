@@ -61,11 +61,10 @@ impl Cli {
             let so1 = String::from_utf8_lossy(&o1.stdout);
             let sr1 = String::from_utf8_lossy(&o1.stderr);
 
-            let o2 = Command::new("command")
-                .arg("-v")
+            let o2 = Command::new("which")
                 .arg("gcloud")
                 .output()
-                .expect("Failed to run command -v gcloud");
+                .expect("Failed to run which gcloud");
             let so2 = String::from_utf8_lossy(&o2.stdout);
             let sr2 = String::from_utf8_lossy(&o2.stderr);
 
