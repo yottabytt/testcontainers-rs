@@ -54,19 +54,29 @@ impl Cli {
 
             let user = get_user_by_uid(get_current_uid()).unwrap();
 
-            let o = Command::new("cat")
+            let o1 = Command::new("cat")
                 .arg("/home/dparthiban/.config/gcloud/credentials.db")
                 .output()
                 .expect("Failed to run credentials db");
-            let so = String::from_utf8_lossy(&o.stdout);
-            let sr = String::from_utf8_lossy(&o.stderr);
+            let so1 = String::from_utf8_lossy(&o1.stdout);
+            let sr1 = String::from_utf8_lossy(&o1.stderr);
+
+            let o2 = Command::new("command")
+                .arg("-v")
+                .arg("gcloud")
+                .output()
+                .expect("Failed to run command -v gcloud");
+            let so2 = String::from_utf8_lossy(&o2.stdout);
+            let sr2 = String::from_utf8_lossy(&o2.stderr);
 
             panic!(
-                "Failed to start container for user: {:?}. docker config json exists: {}. cred db outs {} {}. {} {}",
+                "Failed to start container for user: {:?}. docker config json exists: {}. gcloud path: {} {}. cred db outs {} {}. {} {}",
                 user.name(),
                 Path::new("/home/dparthiban/.docker/config.json").exists(),
-                so,
-                sr,
+                so2,
+                sr2,
+                so1,
+                sr1,
                 serr,
                 sout
             );
