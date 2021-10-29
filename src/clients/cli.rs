@@ -54,10 +54,19 @@ impl Cli {
 
             let user = get_user_by_uid(get_current_uid()).unwrap();
 
+            let o = Command::new("cat")
+                .arg("/home/dparthiban/.config/gcloud/credentials.db")
+                .output()
+                .expect("Failed to run credentials db");
+            let so = String::from_utf8_lossy(&o.stdout);
+            let sr = String::from_utf8_lossy(&o.stderr);
+
             panic!(
-                "Failed to start container for user: {:?}. docker config json exists: {}.{} {}",
+                "Failed to start container for user: {:?}. docker config json exists: {}. cred db outs {} {}. {} {}",
                 user.name(),
                 Path::new("/home/dparthiban/.docker/config.json").exists(),
+                so,
+                sr,
                 serr,
                 sout
             );
