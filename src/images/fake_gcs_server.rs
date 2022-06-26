@@ -18,6 +18,6 @@ impl Image for CloudStorage {
     }
 
     fn ready_conditions(&self) -> Vec<WaitFor> {
-        vec![WaitFor::message_on_stdout("server started at")]
+        vec![WaitFor::message_on_stderr("server started at")]
     }
 }
