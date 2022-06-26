@@ -1,13 +1,35 @@
-use crate::{core::WaitFor, Image};
+use crate::{core::WaitFor, Image, ImageArgs};
 
 const NAME: &str = "fsouza/fake-gcs-server";
 const TAG: &str = "1.38";
+
+#[derive(Debug, Clone)]
+pub struct CloudStorageArgs {
+    pub scheme: String,
+}
+
+impl Default for CloudStorageArgs {
+    fn default() -> Self {
+        CloudStorageArgs {
+            scheme: "http".to_owned(),
+        }
+    }
+}
+
+impl ImageArgs for CloudStorageArgs {
+    fn into_iterator(self) -> Box<dyn Iterator<Item = String>> {
+        let mut args = Vec::new();
+        args.push("-scheme".to_string());
+        args.push(self.scheme);
+        Box::new(args.into_iter())
+    }
+}
 
 #[derive(Debug, Default)]
 pub struct CloudStorage;
 
 impl Image for CloudStorage {
-    type Args = ();
+    type Args = CloudStorageArgs;
 
     fn name(&self) -> String {
         NAME.to_owned()
