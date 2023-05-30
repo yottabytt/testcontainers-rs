@@ -1,6 +1,6 @@
 use crate::{core::WaitFor, Image, ImageArgs};
 
-const NAME: &str = "yottabytt/fake-gcs-server";
+const NAME: &str = "mpgarate/fake-gcs-server";
 const TAG: &str = "latest";
 
 #[derive(Debug, Clone)]
