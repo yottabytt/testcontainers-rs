@@ -1,7 +1,7 @@
 use crate::{core::WaitFor, Image, ImageArgs};
 
-const NAME: &str = "mpgarate/fake-gcs-server";
-const TAG: &str = "latest";
+const NAME: &str = "yottabytt/fake-gcs-server";
+const TAG: &str = "853c4397132f";
 
 #[derive(Debug, Clone)]
 pub struct CloudStorageArgs {
